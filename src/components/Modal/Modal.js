@@ -1,24 +1,31 @@
 import { useState } from "react";
 import "./Modal.css";
+import { addTask, clickCancelBtn, updateTask } from "../../utils/taskActions";
+import { defaultNewTask } from "./defaultNewTask";
+import { useTasks } from "../../contexts/TaskContext";
 
-export const Modal = ({
-  title,
-  description,
-  time,
-  showModal,
-  setShowModal,
-}) => {
-  const [taskTitle, setTaskTitle] = useState(title || "");
-  const [taskDescription, setTaskDescription] = useState(description || "");
-  const [taskTime, setTaskTime] = useState(15);
+export const Modal = ({ taskDetails, setShowModal, setTaskDetails }) => {
+  const { tasks, setTasks } = useTasks();
+
+  const [newTask, setNewTask] = useState(taskDetails || defaultNewTask);
+  const [error, setError] = useState("");
+
+  // if taskdetails are present then we must be editing an existing task
+  const isUpdate = taskDetails ? true : false;
+
+  const resetModal = () => {
+    setShowModal(false);
+    setNewTask(defaultNewTask);
+    setTaskDetails();
+  };
 
   return (
-    <div className={`modal-container ${showModal ? "" : "hidden"}`}>
+    <div className={`modal-container`}>
       <div className="modal">
         <i
-          class="fas fa-times"
+          className="fas fa-times"
           id="close-modal"
-          onClick={() => setShowModal(false)}
+          onClick={() => resetModal()}
         ></i>
 
         <input
@@ -26,16 +33,20 @@ export const Modal = ({
           id="task-title"
           className="modal-input"
           placeholder="Title"
-          value={taskTitle}
-          onChange={(e) => setTaskTitle(e.target.value)}
+          value={newTask.taskTitle}
+          onChange={(e) =>
+            setNewTask({ ...newTask, taskTitle: e.target.value })
+          }
         />
         <textarea
           type="text"
           id="task-desc"
           className="modal-input"
           placeholder="Description..."
-          value={taskDescription}
-          onChange={(e) => setTaskDescription(e.target.value)}
+          value={newTask.taskDescription}
+          onChange={(e) =>
+            setNewTask({ ...newTask, taskDescription: e.target.value })
+          }
         />
         <input
           type="number"
@@ -43,23 +54,42 @@ export const Modal = ({
           className="modal-input"
           placeholder="Time in minutes"
           min={0}
-          value={taskTime}
-          onChange={(e) => setTaskTime(e.target.value)}
+          value={newTask.taskTime}
+          onChange={(e) => setNewTask({ ...newTask, taskTime: e.target.value })}
         />
 
+        {error ? <h4 className="error txt-center">{error}</h4> : null}
+
         <div className="flex justify-between">
-          <button
-            className="btn btn-secondary"
-            onClick={() => setShowModal(false)}
-          >
+          <button className="btn btn-secondary" onClick={() => resetModal()}>
             Cancel
           </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowModal(false)}
-          >
-            Add
-          </button>
+          {isUpdate ? (
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                updateTask({
+                  taskId: taskDetails.taskId,
+                  newTask,
+                  setTasks,
+                  tasks,
+                  setError,
+                  resetModal,
+                })
+              }
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                addTask(newTask, setTasks, tasks, setError, resetModal)
+              }
+            >
+              Add
+            </button>
+          )}
         </div>
       </div>
     </div>
