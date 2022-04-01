@@ -40,6 +40,8 @@
 .modal-input#task-desc {
   height: 10rem;
   overflow-y: scroll;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 .hidden {
