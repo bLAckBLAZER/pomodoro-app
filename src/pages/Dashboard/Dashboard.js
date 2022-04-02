@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavBar, Footer, ToDoItem, Modal } from "../../components";
 import { useTasks } from "../../contexts/TaskContext";
+import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -26,12 +27,14 @@ export const Dashboard = () => {
             </div>
 
             {tasks.map((task) => (
-              <ToDoItem
-                task={task}
-                key={task.taskId}
-                setTaskDetails={setTaskDetails}
-                setShowModal={setShowModal}
-              />
+              <Link to="/pomodoro" state={{ task }}>
+                <ToDoItem
+                  task={task}
+                  key={task.taskId}
+                  setTaskDetails={setTaskDetails}
+                  setShowModal={setShowModal}
+                />
+              </Link>
             ))}
 
             {showModal ? (

@@ -1,5 +1,6 @@
 import { useTasks } from "../../contexts/TaskContext";
 import { deleteTask } from "../../utils/taskActions";
+import "./ToDoItem.css";
 
 export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
   const { tasks, setTasks } = useTasks();
@@ -13,7 +14,7 @@ export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
 
   return (
     <div
-      className={`flex justify-between align-ctr px-1 py-1 ${
+      className={`todo-item flex justify-between align-ctr px-1 py-1 ${
         isCompleted ? "task-complete " : ""
       }`}
     >
