@@ -4,7 +4,7 @@
 
 :root {
   --primary-color: #50bdff;
-  --background-color: #50bdff;
+  --background-color: white;
   --title-font-family: "Dancing Script", cursive;
 }
 
@@ -73,4 +73,8 @@ i:hover {
 
 .btn {
   max-width: 100%;
+}
+
+a {
+  text-decoration: underline;
 }
