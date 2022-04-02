@@ -3,7 +3,7 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useLocation } from "react-router-dom";
 import "./Pomodoro.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   formatSeconds,
   startTimer,
