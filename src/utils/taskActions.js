@@ -3,12 +3,12 @@ import { v4 as uuid } from "uuid";
 export const validateTask = (newTask, setError) => {
   const { taskTitle, taskDescription } = newTask;
 
-  if (taskTitle.length === 0) {
+  if (!taskTitle) {
     setError("Title cannot be blank!");
     return false;
   }
 
-  if (taskDescription.length === 0) {
+  if (!taskDescription) {
     setError("Description cannot be blank!");
     return false;
   }
