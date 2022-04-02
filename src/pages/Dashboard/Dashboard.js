@@ -4,7 +4,7 @@ import { useTasks } from "../../contexts/TaskContext";
 
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
-  const { tasks, setTasks } = useTasks();
+  const { tasks } = useTasks();
   const [taskDetails, setTaskDetails] = useState();
   return (
     <div className="flex flex-col justify-between">
