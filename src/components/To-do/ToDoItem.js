@@ -1,5 +1,6 @@
 import { useTasks } from "../../contexts/TaskContext";
 import { deleteTask } from "../../utils/taskActions";
+import { Link } from "react-router-dom";
 import "./ToDoItem.css";
 
 export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
@@ -18,7 +19,9 @@ export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
         isCompleted ? "task-complete " : ""
       }`}
     >
-      <p className={`h4  ${isCompleted ? "txt-strike " : ""}`}>{taskTitle}</p>
+      <Link to="/pomodoro" state={{ task }}>
+        <p className={`h4  ${isCompleted ? "txt-strike " : ""}`}>{taskTitle}</p>
+      </Link>
       <div className="flex gap-1 align-ctr">
         <i
           className="fas fa-edit"
