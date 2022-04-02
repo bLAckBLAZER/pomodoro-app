@@ -3,6 +3,7 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useLocation } from "react-router-dom";
 import "./Pomodoro.css";
+import Logo from "../../assets/images/clock_logo.png";
 import { useState } from "react";
 import {
   formatSeconds,
@@ -24,7 +25,7 @@ export const Pomodoro = () => {
 
   return (
     <div className="flex flex-col justify-between">
-      <NavBar title="Subtle Clock" />
+      <NavBar title="Subtle Clock" logo={Logo} />
       <main className="main-container">
         <div className="container">
           <section className="task-container">

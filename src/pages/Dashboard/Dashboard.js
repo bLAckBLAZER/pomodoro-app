@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavBar, Footer, ToDoItem, Modal } from "../../components";
 import { useTasks } from "../../contexts/TaskContext";
+import Logo from "../../assets/images/clock_logo.png";
 
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -8,7 +9,7 @@ export const Dashboard = () => {
   const [taskDetails, setTaskDetails] = useState();
   return (
     <div className="flex flex-col justify-between">
-      <NavBar title="Subtle Clock" />
+      <NavBar title="Subtle Clock" logo={Logo} />
       <main className="main-container">
         <div className="container">
           <div className="title">Welcome back, Omkar!</div>
