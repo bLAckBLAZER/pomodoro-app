@@ -1,0 +1,4 @@
+.todo-item:hover {
+  border: 1px solid var(--primary-color);
+  border-radius: 20px;
+}

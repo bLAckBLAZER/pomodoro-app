@@ -70,3 +70,7 @@ i:hover {
 .task-complete {
   color: var(--inactive-color);
 }
+
+.btn {
+  max-width: 100%;
+}
