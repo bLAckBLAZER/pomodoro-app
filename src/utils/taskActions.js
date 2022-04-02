@@ -1,8 +1,7 @@
 import { v4 as uuid } from "uuid";
-import { defaultNewTask } from "../components/Modal/defaultNewTask";
 
 export const validateTask = (newTask, setError) => {
-  const { taskTitle, taskDescription, taskTime } = newTask;
+  const { taskTitle, taskDescription } = newTask;
 
   if (taskTitle.length === 0) {
     setError("Title cannot be blank!");

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Modal.css";
-import { addTask, clickCancelBtn, updateTask } from "../../utils/taskActions";
+import { addTask, updateTask } from "../../utils/taskActions";
 import { defaultNewTask } from "./defaultNewTask";
 import { useTasks } from "../../contexts/TaskContext";
 
