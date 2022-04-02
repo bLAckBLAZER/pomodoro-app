@@ -47,3 +47,7 @@
 .hidden {
   display: none;
 }
+
+.error {
+  color: var(--error-red);
+}
