@@ -21,13 +21,16 @@ export const addTask = (newTask, setTasks, tasks, setError, resetModal) => {
     return;
   }
 
-  setTasks([
+  const updatedTasks = [
     ...tasks,
     {
       ...newTask,
       taskId: uuid(),
     },
-  ]);
+  ];
+  setTasks(updatedTasks);
+
+  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
   resetModal();
 };
 
@@ -43,7 +46,7 @@ export const updateTask = ({
     return;
   }
 
-  const updatedList = tasks.map((task) =>
+  const updatedTasks = tasks.map((task) =>
     task.taskId === taskId
       ? {
           ...task,
@@ -54,11 +57,13 @@ export const updateTask = ({
       : task
   );
 
-  setTasks(updatedList);
+  setTasks(updatedTasks);
+  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
   resetModal();
 };
 
 export const deleteTask = (tasks, setTasks, taskId) => {
   const updatedTasks = tasks.filter((task) => task.taskId !== taskId);
   setTasks(updatedTasks);
+  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
 };
