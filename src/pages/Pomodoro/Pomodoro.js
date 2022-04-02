@@ -50,14 +50,14 @@ export const Pomodoro = () => {
                         startTimer(timerId, setTimerId, setProgressValue)
                       }
                     >
-                      <i class="fas fa-play"></i>
+                      <i className="fas fa-play"></i>
                       Start
                     </button>
                     <button
                       className="btn btn-secondary btn-icon flex-1"
                       onClick={() => pauseTimer(timerId)}
                     >
-                      <i class="fas fa-pause"></i>
+                      <i className="fas fa-pause"></i>
                       Pause
                     </button>
                   </div>
