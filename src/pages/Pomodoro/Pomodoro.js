@@ -18,7 +18,7 @@ export const Pomodoro = () => {
   const [progressValue, setProgressValue] = useState(0);
   const [timerId, setTimerId] = useState(0);
 
-  // to reset the timer (if set) when we leave the page
+  // to reset the timer (if set) when we leave the pomodor page
   useEffect(() => {
     return () => resetTimer(timerId, setProgressValue);
   }, []);
