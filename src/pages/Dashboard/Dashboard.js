@@ -3,10 +3,15 @@ import { NavBar, Footer, ToDoItem, Modal } from "../../components";
 import { useTasks } from "../../contexts/TaskContext";
 import Logo from "../../assets/images/clock_logo.png";
 
+import { useTitle } from "../../utils/useTitle";
+
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const { tasks } = useTasks();
   const [taskDetails, setTaskDetails] = useState();
+
+  useTitle("Dashboard | Subtle Clock");
+
   return (
     <div className="flex flex-col justify-between">
       <NavBar title="Subtle Clock" logo={Logo} />

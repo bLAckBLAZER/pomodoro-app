@@ -19,7 +19,7 @@ export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
         isCompleted ? "task-complete " : ""
       }`}
     >
-      <Link to="/pomodoro" state={{ task }}>
+      <Link to="/pomodoro" state={{ task }} className="flex-1">
         <p className={`h4  ${isCompleted ? "txt-strike " : ""}`}>{taskTitle}</p>
       </Link>
       <div className="flex gap-1 align-ctr">
