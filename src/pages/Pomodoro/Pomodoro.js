@@ -11,6 +11,7 @@ import {
   pauseTimer,
   resetTimer,
 } from "../../utils/pomodoroActions";
+import { useTitle } from "../../utils/useTitle";
 
 export const Pomodoro = () => {
   const location = useLocation();
@@ -20,14 +21,13 @@ export const Pomodoro = () => {
 
   // to reset the timer (if set) when we leave the pomodor page
   useEffect(() => {
-    return () => resetTimer(timerId, setProgressValue);
+    return () => {
+      resetTimer(timerId, setProgressValue);
+    };
   }, []);
 
-  useEffect(() => {
-    document.title = `${formatSeconds(
-      task.taskTime * 60 - progressValue
-    )} | Focus`;
-  }, [progressValue]);
+  // Update page title along with pomodoro time
+  useTitle(`${formatSeconds(task.taskTime * 60 - progressValue)} | Focus`);
 
   // When the timer ends, reset it!
   if (progressValue > task.taskTime * 60) {
