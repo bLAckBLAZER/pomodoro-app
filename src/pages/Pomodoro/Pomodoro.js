@@ -4,7 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { useLocation } from "react-router-dom";
 import "./Pomodoro.css";
 import Logo from "../../assets/images/clock_logo.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   formatSeconds,
   startTimer,
@@ -17,6 +17,17 @@ export const Pomodoro = () => {
   const { task } = location.state;
   const [progressValue, setProgressValue] = useState(0);
   const [timerId, setTimerId] = useState(0);
+
+  // to reset the timer (if set) when we leave the page
+  useEffect(() => {
+    return () => resetTimer(timerId, setProgressValue);
+  }, []);
+
+  useEffect(() => {
+    document.title = `${formatSeconds(
+      task.taskTime * 60 - progressValue
+    )} | Focus`;
+  }, [progressValue]);
 
   // When the timer ends, reset it!
   if (progressValue > task.taskTime * 60) {
