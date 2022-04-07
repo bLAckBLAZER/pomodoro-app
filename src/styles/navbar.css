@@ -49,3 +49,7 @@
     width: 100%;
   }
 }
+
+.dark.navbar {
+  background-color: var(--dark-taskbar-color);
+}

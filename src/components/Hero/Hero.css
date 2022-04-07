@@ -24,6 +24,10 @@
   color: var(--primary-color);
 }
 
+.dark span {
+  color: var(--pure-white);
+}
+
 @media screen and (max-width: 640px) {
   .grid-40-60 {
     display: flex;

@@ -6,6 +6,8 @@
   --primary-color: #50bdff;
   --background-color: white;
   --title-font-family: "Dancing Script", cursive;
+  --dark-background-color: #001845;
+  --dark-taskbar-color: #0353a4;
 }
 
 body {
@@ -48,7 +50,7 @@ button {
   height: 100vh;
   background-color: var(--text-color);
   border-radius: 20px;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   padding: 3rem;
 }
 
@@ -77,4 +79,41 @@ i:hover {
 
 a {
   text-decoration: underline;
+}
+
+.dark {
+  background-color: var(--dark-background-color);
+  color: var(--pure-white);
+}
+
+.dark a {
+  color: var(--pure-white);
+}
+
+.dark.task-container {
+  background-color: var(--dark-taskbar-color);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-btn-hover);
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

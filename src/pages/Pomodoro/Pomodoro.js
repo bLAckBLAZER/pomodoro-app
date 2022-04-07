@@ -12,12 +12,15 @@ import {
   resetTimer,
 } from "../../utils/pomodoroActions";
 import { useTitle } from "../../utils/useTitle";
+import { getTheme } from "../../utils/getTheme";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export const Pomodoro = () => {
   const location = useLocation();
   const { task } = location.state;
   const [progressValue, setProgressValue] = useState(0);
   const [timerId, setTimerId] = useState(0);
+  const { theme } = useTheme();
 
   // to reset the timer (if set) when we leave the pomodor page
   useEffect(() => {
@@ -35,11 +38,11 @@ export const Pomodoro = () => {
   }
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className={`flex flex-col justify-between ${getTheme(theme)}`}>
       <NavBar title="Subtle Clock" logo={Logo} />
-      <main className="main-container">
+      <main className={`main-container ${getTheme(theme)}`}>
         <div className="container">
-          <section className="task-container">
+          <section className={`task-container ${getTheme(theme)}`}>
             <div className="grid-2-col gap-1">
               <article className="flex flex-col align-ctr">
                 <div className="pomodoro-circle">
@@ -50,6 +53,9 @@ export const Pomodoro = () => {
                     maxValue={task.taskTime * 60}
                     styles={buildStyles({
                       textSize: "0.8rem",
+                      textColor: theme === "dark" ? "white" : "",
+                      pathColor: "#50bdff",
+                      trailColor: theme === "dark" ? "white" : "",
                     })}
                   />
                 </div>
@@ -86,8 +92,8 @@ export const Pomodoro = () => {
                 <div className="heading txt-center mg-y-1">
                   {task.taskTitle}
                 </div>
-                <div className="task-detail">
-                  <div className="h4">{task.taskDescription}</div>
+                <div className="task-detail txt-center">
+                  {task.taskDescription}
                 </div>
               </article>
             </div>
