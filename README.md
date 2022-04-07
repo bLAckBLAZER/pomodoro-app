@@ -23,6 +23,11 @@ This app contains below features as of now:
 * React Router
 * react-circular-progressbar
 
+# Preview
+
+![pomodoro](https://user-images.githubusercontent.com/48726860/162267351-ff0f2a28-833c-4155-ab0c-3371ba9e4277.gif)
+
+
 
 
 # Getting Started with Create React App
