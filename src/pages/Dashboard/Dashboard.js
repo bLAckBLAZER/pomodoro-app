@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavBar, Footer, ToDoItem, Modal } from "../../components";
+import { ToDoItem, Modal } from "../../components";
 import { useTasks } from "../../contexts/TaskContext";
 import Logo from "../../assets/images/clock_logo.png";
 import { useTitle } from "../../utils/useTitle";
@@ -15,44 +15,40 @@ export const Dashboard = () => {
   useTitle("Dashboard | Subtle Clock");
 
   return (
-    <div className={`flex flex-col justify-between ${getTheme(theme)}`}>
-      <NavBar title="Subtle Clock" logo={Logo} />
-      <main className={`main-container ${getTheme(theme)}`}>
-        <div className="container">
-          <div className="title">Welcome back, Omkar!</div>
-          <div className="subtitle">{`You have ${tasks.length} tasks today. Good luck!`}</div>
+    <main className={`main-container ${getTheme(theme)}`}>
+      <div className="container">
+        <div className="title">Welcome back, Omkar!</div>
+        <div className="subtitle">{`You have ${tasks.length} tasks today. Good luck!`}</div>
 
-          <div className={`task-container ${getTheme(theme)}`}>
-            <div className="flex justify-between align-ctr">
-              <div className="heading">To-do list</div>
-              <button
-                className="btn btn-primary btn-float h3"
-                onClick={() => setShowModal(!showModal)}
-              >
-                +
-              </button>
-            </div>
-
-            {tasks.map((task) => (
-              <ToDoItem
-                task={task}
-                key={task.taskId}
-                setTaskDetails={setTaskDetails}
-                setShowModal={setShowModal}
-              />
-            ))}
-
-            {showModal ? (
-              <Modal
-                taskDetails={taskDetails}
-                setShowModal={setShowModal}
-                setTaskDetails={setTaskDetails}
-              />
-            ) : null}
+        <div className={`task-container ${getTheme(theme)}`}>
+          <div className="flex justify-between align-ctr">
+            <div className="heading">To-do list</div>
+            <button
+              className="btn btn-primary btn-float h3"
+              onClick={() => setShowModal(!showModal)}
+            >
+              +
+            </button>
           </div>
+
+          {tasks.map((task) => (
+            <ToDoItem
+              task={task}
+              key={task.taskId}
+              setTaskDetails={setTaskDetails}
+              setShowModal={setShowModal}
+            />
+          ))}
+
+          {showModal ? (
+            <Modal
+              taskDetails={taskDetails}
+              setShowModal={setShowModal}
+              setTaskDetails={setTaskDetails}
+            />
+          ) : null}
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   );
 };
