@@ -6,7 +6,7 @@ export const Homepage = () => {
   useTitle("Home | Subtle Clock");
 
   return (
-    <main className="wrapper flex-1">
+    <main className=" flex-1">
       <Hero hero-img="" hero-title="" />
     </main>
   );

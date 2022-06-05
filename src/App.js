@@ -5,6 +5,7 @@ import { PageNotFound, NavBar, Footer } from "./components";
 import { useTheme } from "./contexts/ThemeContext";
 import Logo from "./assets/images/clock_logo.png";
 import { getTheme } from "./utils/getTheme";
+import { Redirect, PrivateRoute } from "./router";
 
 const App = () => {
   const { theme } = useTheme();
@@ -13,11 +14,15 @@ const App = () => {
     <div className={`wrapper justify-between ${getTheme(theme)}`}>
       <NavBar title="Subtle Clock" logo={Logo} />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/pomodoro" element={<Pomodoro />} />
+        <Route element={<Redirect />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/pomodoro" element={<Pomodoro />} />
+        </Route>
         <Route
           path="*"
           element={

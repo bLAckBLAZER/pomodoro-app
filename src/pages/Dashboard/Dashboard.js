@@ -5,6 +5,7 @@ import Logo from "../../assets/images/clock_logo.png";
 import { useTitle } from "../../utils/useTitle";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getTheme } from "../../utils/getTheme";
+import { getLocalStorage } from "../../utils/localStorageCalls";
 
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -12,12 +13,15 @@ export const Dashboard = () => {
   const [taskDetails, setTaskDetails] = useState();
   const { theme } = useTheme();
 
+  const userName = getLocalStorage("user", true);
+  const firstName = userName.displayName.split(" ")[0];
+
   useTitle("Dashboard | Subtle Clock");
 
   return (
     <main className={`main-container ${getTheme(theme)}`}>
       <div className="container">
-        <div className="title">Welcome back, Omkar!</div>
+        <div className="title">{`Welcome back, ${firstName}!`}</div>
         <div className="subtitle">{`You have ${tasks.length} tasks today. Good luck!`}</div>
 
         <div className={`task-container ${getTheme(theme)}`}>

@@ -3,9 +3,9 @@ import { useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Box } from "../../components";
 import { setUserDetailsReducer } from "../../reducers";
-// import { userSignup } from "../../utils/authenticationCalls";
-// import { useAuth, useData } from "../../contexts";
+import { userSignup } from "../../utils/authenticationCalls";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Signup = () => {
   const [userDetails, dispatchUserDetails] = useReducer(setUserDetailsReducer, {
@@ -27,16 +27,14 @@ export const Signup = () => {
   } = userDetails;
 
   const navigate = useNavigate();
-  // const { dispatchAuth } = useAuth();
+  const { dispatchAuth } = useAuth();
   // const { dispatchData } = useData();
 
   return (
     <div className="auth flex-1">
       <Box className="mg-y-auto">
         <form
-        // onSubmit={(e) =>
-        //   userSignup(e, userDetails, dispatchAuth, dispatchData, navigate)
-        // }
+          onSubmit={(e) => userSignup(e, userDetails, dispatchAuth, navigate)}
         >
           <div className="h2 txt-center">Signup</div>
           <div className="width-100">
