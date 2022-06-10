@@ -5,7 +5,7 @@ import { defaultNewTask } from "./defaultNewTask";
 import { useTasks } from "../../contexts/TaskContext";
 
 export const Modal = ({ taskDetails, setShowModal, setTaskDetails }) => {
-  const { tasks, setTasks } = useTasks();
+  const { taskState, dispatchTask } = useTasks();
 
   const [newTask, setNewTask] = useState(taskDetails || defaultNewTask);
   const [error, setError] = useState("");
@@ -69,10 +69,8 @@ export const Modal = ({ taskDetails, setShowModal, setTaskDetails }) => {
               className="btn btn-primary"
               onClick={() =>
                 updateTask({
-                  taskId: taskDetails.taskId,
                   newTask,
-                  setTasks,
-                  tasks,
+                  dispatchTask,
                   setError,
                   resetModal,
                 })
@@ -84,7 +82,7 @@ export const Modal = ({ taskDetails, setShowModal, setTaskDetails }) => {
             <button
               className="btn btn-primary"
               onClick={() =>
-                addTask(newTask, setTasks, tasks, setError, resetModal)
+                addTask(newTask, dispatchTask, setError, resetModal)
               }
             >
               Add

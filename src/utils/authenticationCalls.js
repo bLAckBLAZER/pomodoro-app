@@ -1,4 +1,3 @@
-import axios from "axios";
 import { removeLocalStorage, setLocalStorage } from "./localStorageCalls";
 import { auth } from "../firebase";
 import {
@@ -6,6 +5,8 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
   signOut,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 
 export const userLogin = async (
@@ -17,6 +18,7 @@ export const userLogin = async (
   gotoPath
 ) => {
   event.preventDefault();
+  setPersistence(auth, browserLocalPersistence);
 
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
@@ -43,16 +45,14 @@ export const userLogin = async (
       true
     );
 
-    // dispatchData({ type: "SET_ALL_NOTES", payload: foundUser.notes });
-    // dispatchData({ type: "SET_TRASH", payload: foundUser.trash });
-
     navigate(gotoPath);
   } catch (err) {
     throw new Error("Error in logging in! " + err);
   }
 };
 
-export const userLogout = async (dispatchAuth, navigate) => {
+export const userLogout = async (dispatchAuth, dispatchTasks, navigate) => {
+  setPersistence(auth, browserLocalPersistence);
   try {
     await signOut(auth);
 
@@ -60,8 +60,7 @@ export const userLogout = async (dispatchAuth, navigate) => {
     removeLocalStorage("user");
 
     dispatchAuth({ type: "LOGOUT" });
-    // dispatchData({ type: "RESET" });
-    // console.log("redirecting to homepage");s
+    dispatchTasks({ type: "RESET" });
   } catch {
     throw new Error("Logout failed");
   }
@@ -71,10 +70,10 @@ export const userSignup = async (
   event,
   { firstName, lastName, email, password },
   dispatch,
-  // dispatchData,
   navigate
 ) => {
   event.preventDefault();
+  setPersistence(auth, browserLocalPersistence);
 
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -104,9 +103,6 @@ export const userSignup = async (
       },
       true
     );
-
-    // dispatchData({ type: "SET_ALL_NOTES", payload: foundUser.notes });
-    // dispatchData({ type: "SET_TRASH", payload: foundUser.trash });
 
     navigate("/");
   } catch (err) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToDoItem, Modal } from "../../components";
 import { useTasks } from "../../contexts/TaskContext";
 import Logo from "../../assets/images/clock_logo.png";
@@ -6,10 +6,15 @@ import { useTitle } from "../../utils/useTitle";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getTheme } from "../../utils/getTheme";
 import { getLocalStorage } from "../../utils/localStorageCalls";
+import { getAllTasks } from "../../utils/taskActions";
+import { auth } from "../../firebase";
 
 export const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
-  const { tasks } = useTasks();
+  const {
+    taskState: { tasks },
+    dispatchTask,
+  } = useTasks();
   const [taskDetails, setTaskDetails] = useState();
   const { theme } = useTheme();
 
@@ -17,6 +22,10 @@ export const Dashboard = () => {
   const firstName = userName.displayName.split(" ")[0];
 
   useTitle("Dashboard | Subtle Clock");
+
+  useEffect(() => {
+    getAllTasks(dispatchTask);
+  }, [auth]);
 
   return (
     <main className={`main-container ${getTheme(theme)}`}>
