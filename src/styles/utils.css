@@ -50,6 +50,10 @@
   min-height: 100vh;
 }
 
+.mg-y-auto {
+  margin: 0 auto;
+}
+
 .mg-y-1 {
   margin: 1rem 0;
 }

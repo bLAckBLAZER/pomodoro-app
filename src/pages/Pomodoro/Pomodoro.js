@@ -1,9 +1,7 @@
-import { NavBar, Footer } from "../../components";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useLocation } from "react-router-dom";
 import "./Pomodoro.css";
-import Logo from "../../assets/images/clock_logo.png";
 import { useState, useEffect } from "react";
 import {
   formatSeconds,
@@ -38,69 +36,63 @@ export const Pomodoro = () => {
   }
 
   return (
-    <div className={`flex flex-col justify-between ${getTheme(theme)}`}>
-      <NavBar title="Subtle Clock" logo={Logo} />
-      <main className={`main-container ${getTheme(theme)}`}>
-        <div className="container">
-          <section className={`task-container ${getTheme(theme)}`}>
-            <div className="grid-2-col gap-1">
-              <article className="flex flex-col align-ctr">
-                <div className="pomodoro-circle">
-                  <CircularProgressbar
-                    value={progressValue}
-                    text={formatSeconds(task.taskTime * 60 - progressValue)}
-                    minValue={0}
-                    maxValue={task.taskTime * 60}
-                    styles={buildStyles({
-                      textSize: "0.8rem",
-                      textColor: theme === "dark" ? "white" : "",
-                      pathColor: "#50bdff",
-                      trailColor: theme === "dark" ? "white" : "",
-                    })}
-                  />
-                </div>
+    <main className={`main-container ${getTheme(theme)}`}>
+      <div className="container">
+        <section className={`task-container ${getTheme(theme)}`}>
+          <div className="grid-2-col gap-1">
+            <article className="flex flex-col align-ctr">
+              <div className="pomodoro-circle">
+                <CircularProgressbar
+                  value={progressValue}
+                  text={formatSeconds(task.taskTime * 60 - progressValue)}
+                  minValue={0}
+                  maxValue={task.taskTime * 60}
+                  styles={buildStyles({
+                    textSize: "0.8rem",
+                    textColor: theme === "dark" ? "white" : "",
+                    pathColor: "#50bdff",
+                    trailColor: theme === "dark" ? "white" : "",
+                  })}
+                />
+              </div>
 
-                <div className="flex flex-col width-100">
-                  <div className="flex">
-                    <button
-                      className="btn btn-primary btn-icon flex-1"
-                      onClick={() =>
-                        startTimer(timerId, setTimerId, setProgressValue)
-                      }
-                    >
-                      <i className="fas fa-play"></i>
-                      Start
-                    </button>
-                    <button
-                      className="btn btn-secondary btn-icon flex-1"
-                      onClick={() => pauseTimer(timerId)}
-                    >
-                      <i className="fas fa-pause"></i>
-                      Pause
-                    </button>
-                  </div>
+              <div className="flex flex-col width-100">
+                <div className="flex">
                   <button
-                    className="btn"
-                    onClick={() => resetTimer(timerId, setProgressValue)}
+                    className="btn btn-primary btn-icon flex-1"
+                    onClick={() =>
+                      startTimer(timerId, setTimerId, setProgressValue)
+                    }
                   >
-                    Reset
+                    <i className="fas fa-play"></i>
+                    Start
+                  </button>
+                  <button
+                    className="btn btn-secondary btn-icon flex-1"
+                    onClick={() => pauseTimer(timerId)}
+                  >
+                    <i className="fas fa-pause"></i>
+                    Pause
                   </button>
                 </div>
-              </article>
+                <button
+                  className="btn"
+                  onClick={() => resetTimer(timerId, setProgressValue)}
+                >
+                  Reset
+                </button>
+              </div>
+            </article>
 
-              <article>
-                <div className="heading txt-center mg-y-1">
-                  {task.taskTitle}
-                </div>
-                <div className="task-detail txt-center">
-                  {task.taskDescription}
-                </div>
-              </article>
-            </div>
-          </section>
-        </div>
-      </main>
-      <Footer />
-    </div>
+            <article>
+              <div className="heading txt-center mg-y-1">{task.taskTitle}</div>
+              <div className="task-detail txt-center">
+                {task.taskDescription}
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 };

@@ -20,7 +20,7 @@ export const Hero = () => {
         <Link to="/signup">
           <button className="btn btn-primary mg-y-2">Sign Up</button>
         </Link>
-        <Link to="/dashboard">Already have an account? Log in!</Link>
+        <Link to="/login">Already have an account? Log in!</Link>
       </div>
       <div className="hero-img flex-1">
         <img src={HeroImage} alt="hero img" className="img-res" />

@@ -1,10 +1,19 @@
 import "../../styles/navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getTheme } from "../../utils/getTheme";
+import { useAuth } from "../../contexts";
+import { userLogout } from "../../utils/authenticationCalls";
 
 export const NavBar = ({ title, logo }) => {
   const { theme, setTheme } = useTheme();
+
+  const {
+    authState: { token },
+    dispatchAuth,
+  } = useAuth();
+
+  const navigate = useNavigate();
 
   return (
     <nav className={`navbar fixed ${getTheme(theme)}`}>
@@ -18,13 +27,22 @@ export const NavBar = ({ title, logo }) => {
       </Link>
       <ul className="nav-actions">
         <li className="nav-action-item">
-          <Link to="/login">
-            <button className="btn btn-primary">Login</button>
-          </Link>
+          {token ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => userLogout(dispatchAuth, navigate)}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to="/login">
+              <button className="btn btn-primary">Login</button>
+            </Link>
+          )}
         </li>
         <li className="nav-action-item">
           <i
-            class={`far ${theme === "dark" ? "fa-sun" : "fa-moon"} fa-2x`}
+            className={`far ${theme === "dark" ? "fa-sun" : "fa-moon"} fa-2x`}
             onClick={() => setTheme(theme === "dark" ? "theme" : "dark")}
           ></i>
         </li>
