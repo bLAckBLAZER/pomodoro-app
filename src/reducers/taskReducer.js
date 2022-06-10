@@ -18,6 +18,13 @@ export const taskReducer = (state, { type, payload }) => {
       );
 
       return { ...state, tasks: updatedTasks };
+
+    case "DELETE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.taskId !== payload.taskId),
+      };
+
     case "SET_TASKS":
       return { ...state, tasks: payload };
 

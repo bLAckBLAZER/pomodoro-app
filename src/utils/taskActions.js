@@ -6,6 +6,7 @@ import {
   updateDoc,
   where,
   getDocs,
+  deleteDoc,
   query,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -72,10 +73,15 @@ export const updateTask = async ({
   resetModal();
 };
 
-export const deleteTask = (tasks, setTasks, taskId) => {
-  const updatedTasks = tasks.filter((task) => task.taskId !== taskId);
-  setTasks(updatedTasks);
-  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
+export const deleteTask = async (task, dispatchTask) => {
+  try {
+    const taskRef = doc(db, "tasks", task.taskId);
+    await deleteDoc(taskRef);
+
+    dispatchTask({ type: "DELETE_TASK", payload: task });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const getAllTasks = async (dispatchTask) => {

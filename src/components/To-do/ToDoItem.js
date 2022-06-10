@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import "./ToDoItem.css";
 
 export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
-  const { tasks, setTasks } = useTasks();
+  const { dispatchTask } = useTasks();
 
-  const { taskId, taskTitle, isCompleted } = task;
+  const { taskTitle, isCompleted } = task;
 
   const onEditClick = (task, setTaskDetails, setShowModal) => {
     setTaskDetails(task);
@@ -29,7 +29,7 @@ export const ToDoItem = ({ task, setTaskDetails, setShowModal }) => {
         ></i>
         <i
           className="fas fa-trash-alt"
-          onClick={() => deleteTask(tasks, setTasks, taskId)}
+          onClick={() => deleteTask(task, dispatchTask)}
         ></i>
       </div>
     </div>
