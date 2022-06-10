@@ -1,14 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useReducer } from "react";
+import { taskReducer } from "../reducers";
+import { defaultTaskState } from "./defaultTaskState";
 
 const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("userTasks")) || []
-  );
+  const [taskState, dispatchTask] = useReducer(taskReducer, defaultTaskState);
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
+    <TaskContext.Provider value={{ taskState, dispatchTask }}>
       {children}
     </TaskContext.Provider>
   );

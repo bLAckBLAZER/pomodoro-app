@@ -1,4 +1,15 @@
 import { v4 as uuid } from "uuid";
+import {
+  collection,
+  setDoc,
+  doc,
+  updateDoc,
+  where,
+  getDocs,
+  query,
+} from "firebase/firestore";
+import { auth, db } from "../firebase";
+import { getLocalStorage } from "./localStorageCalls";
 
 export const validateTask = (newTask, setError) => {
   const { taskTitle, taskDescription } = newTask;
@@ -16,29 +27,32 @@ export const validateTask = (newTask, setError) => {
   return true;
 };
 
-export const addTask = (newTask, setTasks, tasks, setError, resetModal) => {
+export const addTask = async (newTask, dispatchTask, setError, resetModal) => {
   if (!validateTask(newTask, setError)) {
     return;
   }
 
-  const updatedTasks = [
-    ...tasks,
-    {
-      ...newTask,
-      taskId: uuid(),
-    },
-  ];
-  setTasks(updatedTasks);
+  let taskId = uuid();
+  let taskToAdd = { ...newTask, taskId, author: auth.currentUser.uid };
 
-  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
-  resetModal();
+  // Firebase call to add
+  try {
+    await setDoc(doc(db, "tasks", taskId), taskToAdd);
+
+    dispatchTask({
+      type: "ADD_TASK",
+      payload: taskToAdd,
+    });
+
+    resetModal();
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export const updateTask = ({
-  taskId,
+export const updateTask = async ({
   newTask,
-  setTasks,
-  tasks,
+  dispatchTask,
   setError,
   resetModal,
 }) => {
@@ -46,19 +60,15 @@ export const updateTask = ({
     return;
   }
 
-  const updatedTasks = tasks.map((task) =>
-    task.taskId === taskId
-      ? {
-          ...task,
-          taskTitle: newTask.taskTitle,
-          taskDescription: newTask.taskDescription,
-          taskTime: newTask.taskTime,
-        }
-      : task
-  );
+  try {
+    const taskRef = doc(db, "tasks", newTask.taskId);
+    await updateDoc(taskRef, newTask);
 
-  setTasks(updatedTasks);
-  localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
+    dispatchTask({ type: "UPDATE_TASK", payload: newTask });
+  } catch (err) {
+    console.error(err);
+  }
+
   resetModal();
 };
 
@@ -66,4 +76,22 @@ export const deleteTask = (tasks, setTasks, taskId) => {
   const updatedTasks = tasks.filter((task) => task.taskId !== taskId);
   setTasks(updatedTasks);
   localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
+};
+
+export const getAllTasks = async (dispatchTask) => {
+  try {
+    const q = query(
+      collection(db, "tasks"),
+      where("author", "==", getLocalStorage("token"))
+    );
+    const querySnapshot = await getDocs(q);
+
+    let allTasks = [];
+
+    querySnapshot.forEach((doc) => allTasks.push(doc.data()));
+
+    dispatchTask({ type: "SET_TASKS", payload: allTasks });
+  } catch (err) {
+    console.error(err);
+  }
 };

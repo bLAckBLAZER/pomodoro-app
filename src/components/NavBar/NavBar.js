@@ -2,7 +2,7 @@ import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getTheme } from "../../utils/getTheme";
-import { useAuth } from "../../contexts";
+import { useAuth, useTasks } from "../../contexts";
 import { userLogout } from "../../utils/authenticationCalls";
 
 export const NavBar = ({ title, logo }) => {
@@ -12,6 +12,8 @@ export const NavBar = ({ title, logo }) => {
     authState: { token },
     dispatchAuth,
   } = useAuth();
+
+  const { dispatchTasks } = useTasks();
 
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ export const NavBar = ({ title, logo }) => {
           {token ? (
             <button
               className="btn btn-primary"
-              onClick={() => userLogout(dispatchAuth, navigate)}
+              onClick={() => userLogout(dispatchAuth, dispatchTasks, navigate)}
             >
               Logout
             </button>
